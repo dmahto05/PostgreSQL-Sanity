@@ -21,7 +21,7 @@ SELECT 'BEGIN; ' || CASE WHEN routines.routine_type = 'PROCEDURE'
 		END , ',' ORDER BY parameters.ordinal_position)  || ');' || 'ROLLBACK;'as "sql_command"
 FROM information_schema.routines
     LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name
-WHERE routines.specific_schema='wecc_system'
+WHERE routines.specific_schema=<<SCHEMA_NAME>>
 AND routines.routine_type IN ('PROCEDURE' , 'FUNCTION') 
 AND (routines.data_type NOT IN ('trigger') OR routines.data_type IS NULL)
 GROUP BY routines.routine_name , routines.routine_type , routines.specific_schema
