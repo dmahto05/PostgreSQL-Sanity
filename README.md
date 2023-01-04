@@ -1,26 +1,12 @@
-# PostgreSQL-Sanity
-PostgreSQL Sanity Script 
-
 One of the key difference, we need to consider while migrating Oracle to PostgreSQL is compilation of Procedural code.
-Its behaviour with regards to Exceptions during compile time and execution time varies between both the databases.
+Its behavior with regards to Exceptions during compile time varies between both the databases.
 
-PostgreSQL has its own behaviour while creating Function or Procedures and tends to don't give most of semantics exceptions unlike Oracle during code compilation or creations.
+PostgreSQL has its own behavior while creating Function or Procedures and tends to don't give most of semantics exceptions unlike Oracle during code compilation or creations as all code is wrapped within as String.
 
-Lets Understand with Examples,
+Whenever we are migrating code as part of Procedural logic, we need to check Function sanity with a Run. Only Conversion is half way done, actual definition of done is running the code and perform functional checks. 
 
-CREATE OR REPLACE FUNCTION TEST_FUNC
-RETURN INT
-AS
-INPUTVAR INT;
-BEGIN
-SELECT COL1 INTO INPUTVAR FROM DUAL;
+Though we might not have functional test cases as part of conversion, we can still perform high level sanity by mocking procedural code calls.
+To ease Creation of Function Call, had developed below SQL to output PROCEDURE or FUNCTION calls.
 
-RETURN INPUTVAR;
-END;
-
-When we try to create above function in Oracle, it is bound to give exceptions.
-
-Errors: FUNCTION TEST_FUNC
-Line/Col: 6/1 PL/SQL: SQL Statement ignored
-Line/Col: 6/8 PL/SQL: ORA-00904: "COL1": invalid identifier
-
+Check out Blog for more details
+https://databaserookies.wordpress.com/2019/10/03/1265/
